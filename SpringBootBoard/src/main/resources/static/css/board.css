@@ -1,0 +1,36 @@
+#content .listBoard {
+	border: 1px solid #0055;
+	cellpadding: 0;
+	cellspacing: 0;
+	width: 700px;
+}
+#content  table th{
+	background-color:gray;
+}
+#content  table tr{
+	border: 1px solid #000;
+}
+#content  table td{
+	border: 1px solid #000;
+}
+#content .insertBoard {
+	border: 1px solid #000;
+	cellpadding: 0;
+	cellspacing: 0;
+	width: 700px;
+}
+
+#content .getBoard {
+	border: 1px solid #000;
+	cellpadding: 0;
+	cellspacing: 0;
+	width: 700px;
+}
+
+
+.alignLeft{
+	text-align: left;
+}
+.alignCenter{
+	text-align: center;
+}
