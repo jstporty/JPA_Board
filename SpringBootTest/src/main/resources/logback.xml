@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+ <!-- console appender:로그를 콘솔에 출력 -->
+ <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+  <encoder>
+   <charset>UTF-8</charset>
+   <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+  </encoder>
+ </appender>
+
+ <!-- file appender:로그를 지정파일에 기록-->
+ <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+ <!-- RollingFileAppender:FileAppender을 상속. 날짜와 용량 등을 설정해서 패턴에 따라 로그가 각기 다른 파일에 기록되게 할 수 있음 -->
+  <file>src\main\resources\file.log</file>
+  <rollingPolicy class="ch.qos.logback.core.rolling.TiemBasedRollingPolicy">
+   <fileNamePattern>/경로/파일명-%d{yyyy-MM-dd}.확장자</fileNamePattern>
+   <maxHistory>30</maxHistory>
+  </rollingPolicy>
+  <encoder>
+   <charset>UTF-8</charset>
+   <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern> <!-- 이 패턴이 로그로 출력 된다!! -->
+  </encoder>
+ </appender>
+
+ <!-- logger : 실제 로그 기능을 수행하는 객체. 각 Logger마다 name을 통해 구분한다. -->
+ <logger name="jdbc.sqlonly" level="OFF"/>
+ <logger name="jdbc.sqltiming" level="DEBUG"/>
+ <logger name="jdbc.audit" level="OFF"/>
+ <logger name="jdbc.resultset" level="OFF"/>
+ <logger name="jdbc.resultsettable" level="DEBUG"/>
+ <logger name="jdbc.connection" level="OFF"/>
+
+ <!-- root logger : 최상위 로거인 Root Loger를 설정하면 이를 계층적으로 활용할 수 있다. -->
+ <root>
+  <level value="info"/>
+  <appender-ref ref="STDOUT"/>
+  <appender-ref ref="FILE"/>
+ </root>
+</configuration>
