@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>메인 페이지</title>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" th:href="@{/css/board.css}" />
+</head>
+<body>
+	<h1>
+		<span  class="exception">boardException발생</span>
+	</h1>
+	<span><a th:href="@{/}">메인화면으로</a></span>
+
+	<table>
+
+		<tr>
+			<th id="excolor" class="alignLeft">예외 메시지: [[${exception.message}]]</th>
+		</tr>
+
+		<tr th:each="trace: ${exception.stackTrace}">
+			<td th:text="${trace}">
+		</tr>
+	</table>
+</body>
+</html>

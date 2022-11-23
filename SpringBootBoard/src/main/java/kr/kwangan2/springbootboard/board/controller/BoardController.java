@@ -12,21 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.kwangan2.springbootboard.board.entity.Board;
 import kr.kwangan2.springbootboard.board.service.BoardService;
+import kr.kwangan2.springbootboard.member.entity.Member;
 
+@SessionAttributes("member")
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
+	
+	
 	@Autowired
 	private BoardService boardService;
 
-	@GetMapping("/listBoard")
-	public String listBoard(Model model, Board board) {
+	@RequestMapping("/listBoard")
+	public String listBoard(@ModelAttribute("member") Member member, Model model, Board board) {
+
+		if (member.getId() == null) {
+
+			return "redirect:/member/login";
+		}
 
 		List<Board> boardList = boardService.listBoard(board);
 		model.addAttribute("boardList", boardList);
@@ -35,14 +46,20 @@ public class BoardController {
 	}
 
 	@GetMapping("/insertBoard")
-	public String insertBoardView() {
+	public String insertBoardView(@ModelAttribute("member") Member member) {
+		if (member.getId() == null) {
 
+			return "redirect:/member/login";
+		}
 		return "/board/insertBoard";
 	}
 
 	@PostMapping("/insertBoardProc")
-	public String insertBoardProc(Board board) {
+	public String insertBoardProc(@ModelAttribute("member") Member member, Board board) {
+		if (member.getId() == null) {
 
+			return "redirect:/member/login";
+		}
 		boardService.insertBoard(board);
 
 		return "redirect:/board/listBoard";
@@ -50,15 +67,21 @@ public class BoardController {
 	}
 
 	@GetMapping("/getBoard")
-	public String getBoard(Board board, Model model, String action) {
+	public String getBoard(@ModelAttribute("member") Member member, Board board, Model model, String action) {
 		model.addAttribute("board", boardService.getBoard(board));
+		if (member.getId() == null) {
 
+			return "redirect:/member/login";
+		}
 		return "/board/getBoard";
 	}
 
 	@PostMapping("/updateBoardProc")
-	public String updateBoard(Board board) {
+	public String updateBoard(@ModelAttribute("member") Member member, Board board) {
+		if (member.getId() == null) {
 
+			return "redirect:/member/login";
+		}
 		boardService.updateBoard(board);
 
 		return "redirect:/board/listBoard";
@@ -73,9 +96,18 @@ public class BoardController {
 	}
 
 	@GetMapping("/hello")
-	public String hello(Model model) {
+	public String hello(@ModelAttribute("member") Member member, Model model) {
 		model.addAttribute("greeting", "hello thymeleaf!!!!!!!!!!!!!!!");
+		if (member.getId() == null) {
+
+			return "redirect:/member/login";
+		}
 		return "/board/hello";
+	}
+
+	@ModelAttribute("member")
+	public Member setMember() {
+		return new Member();
 	}
 
 }

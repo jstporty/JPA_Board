@@ -8,7 +8,9 @@
 	<div id="wrapper">
 		<div id="title">
 			<h1>게시글 목록</h1>
+			<h3><span color="red" th:text="${session['member'].name}"></span>님 게시판 입장</h3>
 		</div>
+		<div><a th:href="@{/member/logout}">Log_out</a></div>
 		<div id="content" class="listBoard">
 			<table>
 				<colgroup>
